@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lab Insight Dashboard</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="container nav-bar">
+            <h1>Healthcare Lab Dashboard</h1>
+            <nav>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="/static/js/auth.js?v=1.2.2"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('access_token');
+            window.location.href = '/login';
+        }
+    </script>
+
+    <footer>
+        <p>Disclaimer: This system provides explanations only. Not for diagnosis.</p>
+    </footer>
+
+    <!-- CHATBOT TOGGLE -->
+    <div id="chatbotToggle" class="chatbot-toggle">💬</div>
+
+    <!-- CHATBOT WINDOW -->
+    <div id="chatbotWindow" class="chatbot-window hidden">
+
+        <div class="chatbot-header">
+            <span>🤖 Lab Assistant</span>
+            <button id="chatbotClose">✕</button>
+        </div>
+        <!-- CHAT MESSAGES -->
+        <div id="chatMessages" class="chatbot-messages"></div>
+
+        <!-- CHAT INPUT -->
+        <div class="chatbot-input">
+            <input id="chatInput" type="text" placeholder="Ask about lab results..." />
+            <button id="sendMessage">Send</button>
+        </div>
+
+    </div>
+
+    <script src="/static/js/chatbot.js?v=1.2.2"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

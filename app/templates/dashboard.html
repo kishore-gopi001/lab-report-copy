@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<!-- Dashboard Header -->
+<div class="dashboard-header">
+    <h1>Lab Reports Dashboard</h1>
+</div>
+
+<section class="cards">
+    <div class="card">
+        <h3>Total Labs</h3>
+        <p id="totalLabs">–</p>
+    </div>
+    <div class="card normal">
+        <h3>Normal</h3>
+        <p id="normalCount">–</p>
+    </div>
+    <div class="card abnormal">
+        <h3>Abnormal</h3>
+        <p id="abnormalCount">–</p>
+    </div>
+    <div class="card critical">
+        <h3>Critical</h3>
+        <p id="criticalCount">–</p>
+    </div>
+    <div class="card unknown">
+        <h3>Unknown</h3>
+        <p id="unknownCount">–</p>
+    </div>
+</section>
+
+<!-- OVERALL STATUS CHART + UNREVIEWED ALERTS (Side by Side) -->
+<section class="chart-alerts-container">
+    <div class="chart-center-wrapper">
+        <h3>Overall Lab Status Distribution</h3>
+        <canvas id="statusChart"></canvas>
+    </div>
+
+    <div class="alerts-section">
+        <h3>Unreviewed Critical Alerts</h3>
+        <ul id="criticalAlerts"></ul>
+    </div>
+</section>
+
+<!-- DETAILED CHARTS (Side by Side) -->
+<section class="charts">
+    <div class="chart-box">
+        <h3>Abnormal & Critical Labs by Test</h3>
+        <canvas id="labChart"></canvas>
+    </div>
+    <div class="chart-box">
+        <h3>Abnormal & Critical Labs by Gender</h3>
+        <canvas id="genderChart"></canvas>
+    </div>
+</section>
+
+<section class="insights">
+    <div class="insight-box">
+        <h3>Top Affected Lab Tests</h3>
+        <table id="topTestsTable">
+            <thead>
+                <tr>
+                    <th>Test</th>
+                    <th>Status</th>
+                    <th>Patients</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/dashboard.js?v=1.2.2"></script>
+{% endblock %}

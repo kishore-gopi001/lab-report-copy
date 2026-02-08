@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<!-- Dashboard Header -->
+<div class="dashboard-header">
+    <h1>ML Risk Prediction Dashboard</h1>
+</div>
+
+<!-- RISK PREDICTION OVERVIEW CARDS -->
+<section class="cards">
+    <div class="card normal">
+        <h3>Predicted Normal Risk</h3>
+        <p id="riskNormalCount" class="badge-normal">–</p>
+    </div>
+    <div class="card abnormal">
+        <h3>Predicted Abnormal Risk</h3>
+        <p id="riskAbnormalCount" class="badge-abnormal">–</p>
+    </div>
+    <div class="card critical">
+        <h3>Predicted Critical Risk</h3>
+        <p id="riskCriticalCount" class="badge-critical">–</p>
+    </div>
+</section>
+
+<!-- ML CHARTS SECTION -->
+<section class="charts">
+    <!-- Patient Risk Distribution (Donut) -->
+    <div class="chart-box">
+        <h3>Patient Risk Distribution</h3>
+        <canvas id="patientRiskChart"></canvas>
+    </div>
+
+    <!-- Recent Critical Activity (Horizontal Bar) -->
+    <div class="chart-box">
+        <h3>Recent Critical Tests (24h)</h3>
+        <canvas id="recentCriticalChart"></canvas>
+    </div>
+</section>
+
+<section class="charts">
+    <div class="chart-box">
+        <h3>Unreviewed Critical Alerts</h3>
+        <div id="unreviewed-stats" class="summary-stats-grid">
+            <div class="summary-stat-box warning">
+                <p class="stat-label">Total Unreviewed</p>
+                <p class="stat-value" id="totalUnreviewed">–</p>
+            </div>
+            <div class="summary-stat-box danger">
+                <p class="stat-label">Affected Patients</p>
+                <p class="stat-value" id="affectedPatients">–</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- High-Risk Patient Count (KPI Card) -->
+    <div class="chart-box">
+        <h3>High-Risk Patient Summary</h3>
+        <div id="high-risk-stats" class="kpi-box-centered">
+            <p class="stat-label">Total Critical Patients</p>
+            <p class="stat-value-large danger" id="criticalPatientCount">–</p>
+            <p class="stat-sublabel">Requiring Immediate Attention</p>
+        </div>
+    </div>
+</section>
+
+<!-- HIGH-RISK PATIENTS TABLE WITH PAGINATION -->
+<section class="insights">
+    <div class="insight-box critical-box">
+        <h3>High Risk Patients (ML Prediction)</h3>
+        <table id="riskPatientsTable">
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Risk Level</th>
+                    <th>Confidence</th>
+                    <th>Normal %</th>
+                    <th>Abnormal %</th>
+                    <th>Critical %</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button id="prevBtn" class="btn-pagination">← Previous</button>
+            <span id="pageInfo">Page 1</span>
+            <button id="nextBtn" class="btn-pagination">Next →</button>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/ml-dashboard.js?v=1.2.2"></script>
+{% endblock %}

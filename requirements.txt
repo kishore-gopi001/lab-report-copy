@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pandas
+pydantic
+python-dotenv
+scikit-learn
+numpy
+langchain
+langgraph
+chromadb
+openai
+sentence-transformers
+httpx
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
