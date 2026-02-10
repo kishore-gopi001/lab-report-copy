@@ -28,7 +28,8 @@ def categorize_intent(state: AgentState):
     except Exception:
         data = {"intent": "unsupported", "entities": {}}
         
-    if not isinstance(data, dict): data = {"intent": "unsupported", "entities": {}}
+    if not isinstance(data, dict) or "intent" not in data: 
+        data = {"intent": "unsupported", "entities": {}}
     if "entities" not in data or not isinstance(data["entities"], dict): 
         data["entities"] = {}
     
@@ -47,13 +48,13 @@ def categorize_intent(state: AgentState):
         return {"intent": "unsupported", "entities": {}}
 
     # 2. Heuristic Intent Fixes
-    if any(w in lower_question for w in ["show", "list", "summarize", "history", "trend", "results for"]):
+    if any(w in lower_question for w in ["show", "list", "summarize", "history", "trend", "results for", "display", "get", "tell"]):
         data["intent"] = "rag"
     
     # 3. Clinical Density Check (Safety Catch)
     # If the LLM or heuristics flagged it as RAG/Count/Risk, but there's ZERO clinical context,
     # and NO patient ID / test name extracted, force to unsupported.
-    clinical_keywords = ["lab", "result", "test", "report", "clinical", "patient", "blood", "doctor", "health", "risk", "status"] + [t.lower() for t in SUPPORTED_LAB_TESTS]
+    clinical_keywords = ["lab", "result", "test", "report", "clinical", "patient", "blood", "doctor", "health", "risk", "status", "subject"] + [t.lower() for t in SUPPORTED_LAB_TESTS]
     has_clinical_context = any(ck in lower_question for ck in clinical_keywords)
     
     if data["intent"] in ["rag", "count", "risk"] and not has_clinical_context:
@@ -152,6 +153,9 @@ def generate_response(state: AgentState):
         context_str = state.get('context', [""])[0] if state.get('context') else "No records found."
         subject_id = state['entities'].get('subject_id')
         
+        if not state.get('context') and subject_id:
+            return {"final_answer": f"DIRECT_RESPONSE: No data present related to subject {subject_id}."}
+
         if subject_id:
             prompt = LIGHTWEIGHT_RAG_PROMPT.format(
                 subject_id=subject_id,

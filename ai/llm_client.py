@@ -28,7 +28,7 @@ class LocalChatOllama:
     """
 
     def __init__(self, model: str = None, temperature: float = 0, streaming: bool = False):
-        self.model = MODEL  # Always use the local model
+        self.model = model if model else MODEL  # Use provided model or fallback to default
         self.temperature = temperature
         self.streaming = streaming
 
@@ -47,9 +47,9 @@ class LocalChatOllama:
                 "repeat_penalty": 1.2,
                 "top_k": 40,
                 "top_p": 0.9,
-                "num_predict": 256
+                "num_predict": 1024
             },
-            "stop": ["\n\n", "User:", "QUESTION:", "ANSWER:"]
+            "stop": ["User:", "QUESTION:", "ANSWER:"]
         }
         
         try:
@@ -77,9 +77,9 @@ class LocalChatOllama:
                 "repeat_penalty": 1.2,
                 "top_k": 40,
                 "top_p": 0.9,
-                "num_predict": 256
+                "num_predict": 1024
             },
-            "stop": ["\n\n", "User:", "QUESTION:", "ANSWER:"]
+            "stop": ["User:", "QUESTION:", "ANSWER:"]
         }
         
         try:

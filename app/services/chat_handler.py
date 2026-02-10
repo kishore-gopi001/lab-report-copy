@@ -103,7 +103,7 @@ async def handle_chat_stream(question: str):
     # FAST PATH 3: Patient RAG
     # ============================================================
     is_history = any(w in lower_q for w in ["results", "latest", "show", "summarize", 
-    "overall status","summary", "what are", "history", "report"])
+    "overall status","summary", "what are", "history", "report", "display"])
     if is_history and patient_match and not is_count:
         yield f"data: {json.dumps({'type': 'status', 'content': 'Retrieving clinical records...'})}\n\n"
         subject_id = patient_match.group()
@@ -128,7 +128,7 @@ async def handle_chat_stream(question: str):
             async for chunk in llm.astream([HumanMessage(content=prompt)]):
                 if chunk.content: yield f"data: {json.dumps({'type': 'token', 'content': chunk.content})}\n\n"
         else:
-            yield f"data: {json.dumps({'type': 'token', 'content': f'No clinical history found for patient {subject_id}.'})}\n\n"
+            yield f"data: {json.dumps({'type': 'token', 'content': f'No data present related to subject {subject_id}.'})}\n\n"
             
         yield f"data: {json.dumps({'type': 'done'})}\n\n"
         return

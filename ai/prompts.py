@@ -14,7 +14,7 @@ Query: {question}
 """
 
 # MINIMALIST PROMPT for TinyLlama (Patient Specific)
-LIGHTWEIGHT_RAG_PROMPT = """Analyze these patient labs and provide a CONCISE summary (2-3 sentences). 
+LIGHTWEIGHT_RAG_PROMPT = """Analyze these patient labs and provide a summary. 
 Do NOT repeat yourself. Focus on the most important results.
 
 PATIENT: {subject_id}
